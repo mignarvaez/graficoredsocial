@@ -22,10 +22,8 @@ RUN apt-get install -y git cmake make gcc g++ libssl-dev && \
   make install
 
 #Instrucciones para instalar pymgclient un adaptador de python para la base de datos memgraph
-RUN git clone https://github.com/memgraph/pymgclient /pymgclient && \
-  cd pymgclient && \
-  python3 setup.py build && \
-  python3 setup.py install
+#Toco instalar con pip, haciendo make no funcionaba
+RUN pip3 install --user pymgclient
 
 #Se define el directorio de trabajo
 WORKDIR /app
@@ -37,6 +35,14 @@ COPY poetry.lock pyproject.toml /app/
 RUN poetry config virtualenvs.create false && \
   poetry install --no-interaction --no-ansi
 
+#Se copian los archivos de la ruta actual a la carpeta app del contenedor
+#Se expone el puerto 5000
 COPY . /app/
 EXPOSE 5000
+#Se agrega y cambia los permisos del archivo de flask en las siguientes dos lineas
+ADD start.sh /
+RUN chmod +x /start.sh
+#Se especifica el ejecutable que usará el contenedor
 ENTRYPOINT [ "poetry", "run" ]
+#Se indican los parametros a usar con el ejecutable anterior
+CMD ["/start.sh"]

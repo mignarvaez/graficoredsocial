@@ -1,0 +1,20 @@
+version: '3'
+services:
+  memgraph:
+    image: "memgraph"
+    ports:
+      - "7687:7687"
+  graficoredsocial:
+    build: .
+    #se evita la necesidad de reiniciar constantemente nuestra imagen para cargar nuevos cambios desde la maquina host.
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    environment:
+      MG_HOST: memgraph
+      #A través de este puerto se comunican las aplicaciones de los contenedores de la aplicación(graficoredsocial-memgraph)
+      MG_PORT: 7687
+      #Se indica que primero debe correrse la base de datos memgraph antes que la aplicación
+    depends_on:
+      - memgraph
