@@ -37,7 +37,7 @@ RUN poetry config virtualenvs.create false && \
 
 #Se copian los archivos de la ruta actual a la carpeta app del contenedor
 #Se expone el puerto 5000
-COPY . /app/
+COPY . /app
 EXPOSE 5000
 #Se agrega y cambia los permisos del archivo de flask en las siguientes dos lineas
 ADD start.sh /

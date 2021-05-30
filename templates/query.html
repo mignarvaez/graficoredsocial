@@ -1,0 +1,11 @@
+<!-- Página usada para mostrar el query -->
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+    <div class="btn-group mt-3 mb-3" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary" onclick="runQuery('get-users')">Mira todos los usuarios</button>
+        <button type="button" class="btn btn-secondary" onclick="runQuery('get-relationships')">Revisa todas las relaciones</button>
+    </div>
+    <div id="JSON" style="background-color:white"></div>
+</div>
+<script src="/static/js/query.js" charset="utf-8"></script>
+{% endblock %}
